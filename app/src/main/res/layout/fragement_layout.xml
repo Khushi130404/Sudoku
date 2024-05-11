@@ -85,6 +85,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             ></TextView>
+
         <TextView
             android:id="@+id/cell3.2"
             android:background="@drawable/cell"
@@ -92,6 +93,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             ></TextView>
+
         <TextView
             android:id="@+id/cell3.3"
             android:background="@drawable/cell"
