@@ -63,8 +63,10 @@ public class MainActivity extends Activity {
         }
 
         int board[][] = new int[9][9];
-        CompleteSudoku cs = new CompleteSudoku(board);
-        cs.fullSudoku(0,0);
+//        CompleteSudoku cs = new CompleteSudoku(board);
+//        cs.fullSudoku(0,0);
+        QuestionSudoku qs = new QuestionSudoku(board,32);
+        qs.createQuetionSudoku();
         for(int i=0; i<9; i++)
         {
             for(int j=0; j<9; j++)
