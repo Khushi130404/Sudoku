@@ -64,18 +64,21 @@ public class MainActivity extends Activity {
 
         int board[][] = new int[9][9];
         CompleteSudoku cs = new CompleteSudoku(board);
-        for(int i=0; i<3; i++)
+        cs.fullSudoku(0,0);
+        for(int i=0; i<9; i++)
         {
-            for(int j=0; j<3; j++)
+            for(int j=0; j<9; j++)
             {
-                for(int k=0; k<3; k++)
+                if(board[i][j] != 0)
                 {
-                    for(int l=0; l<3; l++)
-                    {
-                        cell[i][j][k][l].setText("0");
-                    }
+                    int blockRow = i / 3;
+                    int blockCol = j / 3;
+                    int cellRow = i % 3;
+                    int cellCol = j % 3;
+                    cell[blockRow][blockCol][cellRow][cellCol].setText(""+board[i][j]);
                 }
             }
         }
+
     }
 }
