@@ -21,7 +21,7 @@
             >
 
             <include
-                android:id="@+id/in1"
+                android:id="@+id/block11"
                 layout="@layout/fragement_layout"
                 ></include>
 
@@ -33,7 +33,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <include layout="@layout/fragement_layout" />
+
+            <include
+                android:id="@+id/block12"
+                layout="@layout/fragement_layout" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -42,7 +46,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <include layout="@layout/fragement_layout" />
+
+            <include
+                android:id="@+id/block13"
+                layout="@layout/fragement_layout" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -61,7 +69,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <include layout="@layout/fragement_layout" />
+
+            <include
+                android:id="@+id/block21"
+                layout="@layout/fragement_layout" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -70,7 +82,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <include layout="@layout/fragement_layout" />
+
+            <include
+                android:id="@+id/block22"
+                layout="@layout/fragement_layout" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -79,7 +95,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <include layout="@layout/fragement_layout" />
+
+            <include
+                android:id="@+id/block23"
+                layout="@layout/fragement_layout" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -98,7 +118,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <include layout="@layout/fragement_layout" />
+
+            <include
+                android:id="@+id/block31"
+                layout="@layout/fragement_layout" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -107,7 +131,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <include layout="@layout/fragement_layout" />
+
+            <include
+                android:id="@+id/block32"
+                layout="@layout/fragement_layout" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +144,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <include layout="@layout/fragement_layout" />
+
+            <include
+                android:id="@+id/block33"
+                layout="@layout/fragement_layout" />
+
         </LinearLayout>
 
     </LinearLayout>
