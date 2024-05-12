@@ -63,21 +63,19 @@ public class MainActivity extends Activity {
         }
 
         int board[][] = new int[9][9];
-//        CompleteSudoku cs = new CompleteSudoku(board);
-//        cs.fullSudoku(0,0);
         QuestionSudoku qs = new QuestionSudoku(board,32);
         qs.createQuetionSudoku();
         for(int i=0; i<9; i++)
         {
             for(int j=0; j<9; j++)
             {
-                if(board[i][j] != 0)
+                if(qs.fullBoard[i][j] != 0)
                 {
                     int blockRow = i / 3;
                     int blockCol = j / 3;
                     int cellRow = i % 3;
                     int cellCol = j % 3;
-                    cell[blockRow][blockCol][cellRow][cellCol].setText(""+board[i][j]);
+                    cell[blockRow][blockCol][cellRow][cellCol].setText(""+qs.fullBoard[i][j]);
                 }
             }
         }
