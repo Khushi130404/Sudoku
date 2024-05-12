@@ -14,7 +14,21 @@
         >
 
         <LinearLayout
-            android:id="@+id/fr1.1"
+            android:id="@+id/ll11"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+            <include
+                android:id="@+id/in1"
+                layout="@layout/fragement_layout"
+                ></include>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll12"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -23,53 +37,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/fr1.2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-            <include layout="@layout/fragement_layout" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/fr1.3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-            <include layout="@layout/fragement_layout" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_weight="1"
-        >
-
-        <LinearLayout
-            android:id="@+id/fr2.1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-            <include layout="@layout/fragement_layout" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/fr2.2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-            <include layout="@layout/fragement_layout" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/fr2.3"
+            android:id="@+id/ll13"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -88,7 +56,7 @@
         >
 
         <LinearLayout
-            android:id="@+id/fr3.1"
+            android:id="@+id/ll21"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -97,7 +65,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/fr3.2"
+            android:id="@+id/ll22"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -106,7 +74,44 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/fr3.3"
+            android:id="@+id/ll23"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <include layout="@layout/fragement_layout" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll31"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <include layout="@layout/fragement_layout" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll32"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <include layout="@layout/fragement_layout" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll33"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
