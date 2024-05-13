@@ -42,6 +42,7 @@ public class NewGameActivity extends Activity
     Button btCount[];
 
     TextView tvSelected;
+    int selectedI,selectedJ;
     List<TextView> tvAdjecent;
     int board[][] = new int[9][9];
     QuestionSudoku qs = new QuestionSudoku(board,50);
@@ -87,6 +88,12 @@ public class NewGameActivity extends Activity
                             n = Integer.parseInt(btCount[finalI].getText().toString())-1;
                             btCount[finalI].setText(""+n);
                             tvSelected.setText(""+(finalI+1));
+                            //int x = tvSelected.getId();
+                            if(qs.fullBoard[selectedI][selectedJ]==finalI+1)
+                            {
+                                board[selectedI][selectedJ] = finalI+1;
+                                Toast.makeText(getApplicationContext(), "Correct position...!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else
                         {
@@ -127,7 +134,10 @@ public class NewGameActivity extends Activity
                                     @Override
                                     public void onClick(View v)
                                     {
-                                        if(!cell[finalI][finalJ][finalK][finalL].getText().equals(""))
+                                        int ik = (finalI*3) + finalK;
+                                        int jl = (finalJ*3) + finalL;
+
+                                        if(board[ik][jl]!=0)
                                         {
                                             return;
                                         }
@@ -153,11 +163,10 @@ public class NewGameActivity extends Activity
                                         }
                                         cell[finalI][finalJ][finalK][finalL].setBackground(getDrawable(R.drawable.cell_on_select));
                                         tvSelected = cell[finalI][finalJ][finalK][finalL];
-
+                                        selectedI = (3*finalI) + finalK;
+                                        selectedJ = (3*finalJ) + finalL;
                                     }
                                 });
-
-
                             }
                         }
                     }
@@ -181,6 +190,5 @@ public class NewGameActivity extends Activity
                 }
             }
         }
-
     }
 }
