@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
 
         int board[][] = new int[9][9];
         QuestionSudoku qs = new QuestionSudoku(board,32);
-        qs.createQuetionSudoku();
+        qs.createQuestionSudoku();
         for(int i=0; i<9; i++)
         {
             for(int j=0; j<9; j++)
