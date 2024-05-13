@@ -6,4 +6,10 @@
         android:startColor="#345"
         android:endColor="#345"
         ></gradient>
+
+    <stroke
+        android:width="1dp"
+        android:color="@color/white"
+        ></stroke>
+    
 </shape>

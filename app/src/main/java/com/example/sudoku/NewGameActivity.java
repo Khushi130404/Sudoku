@@ -29,6 +29,9 @@ public class NewGameActivity extends AppCompatActivity
 
     TextView tvSelected;
     List<TextView> tvAdjecent;
+    int board[][] = new int[9][9];
+    QuestionSudoku qs = new QuestionSudoku(board,32);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +43,10 @@ public class NewGameActivity extends AppCompatActivity
         llBoard = findViewById(R.id.llBoard);
         View inBoard = findViewById(R.id.inBoard);
         tvAdjecent = new ArrayList<TextView>();
+
+        board= new int[9][9];
+        qs = new QuestionSudoku(board,32);
+        qs.createQuetionSudoku();
 
         if(inBoard instanceof LinearLayout)
         {
@@ -68,6 +75,10 @@ public class NewGameActivity extends AppCompatActivity
                                     @Override
                                     public void onClick(View v)
                                     {
+                                        if(!cell[finalI][finalJ][finalK][finalL].getText().equals(""))
+                                        {
+                                            return;
+                                        }
                                         if(tvSelected!=null)
                                         {
                                             tvSelected.setBackground(getDrawable(R.drawable.cell));
@@ -102,9 +113,6 @@ public class NewGameActivity extends AppCompatActivity
             }
         }
 
-        int board[][] = new int[9][9];
-        QuestionSudoku qs = new QuestionSudoku(board,32);
-        qs.createQuetionSudoku();
         for(int i=0; i<9; i++)
         {
             for(int j=0; j<9; j++)
