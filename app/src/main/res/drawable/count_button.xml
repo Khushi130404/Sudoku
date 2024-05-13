@@ -8,9 +8,5 @@
         android:centerColor="#357"
         ></gradient>
 
-    <stroke
-        android:width="2dp"
-        android:color="@color/white"
-        ></stroke>
 
 </shape>

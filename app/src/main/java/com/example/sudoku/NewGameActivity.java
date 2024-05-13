@@ -2,15 +2,18 @@ package com.example.sudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewGameActivity extends AppCompatActivity
+public class NewGameActivity extends Activity
 {
 
     LinearLayout llBoard;
@@ -27,11 +30,21 @@ public class NewGameActivity extends AppCompatActivity
             {R.id.cell21,R.id.cell22,R.id.cell23},
             {R.id.cell31,R.id.cell32,R.id.cell33}};
 
+    int btNumId[] = {R.id.btNum1,R.id.btNum2,R.id.btNum3,
+            R.id.btNum4,R.id.btNum5,R.id.btNum6,
+            R.id.btNum7,R.id.btNum8,R.id.btNum9};
+
+    int btCountId[] = {R.id.btCount1, R.id.btCount2, R.id.btCount3,
+            R.id.btCount4, R.id.btCount5, R.id.btCount6,
+            R.id.btCount7, R.id.btCount8, R.id.btCount9};
+
+    Button btNum[];
+    Button btCount[];
+
     TextView tvSelected;
     List<TextView> tvAdjecent;
     int board[][] = new int[9][9];
-    QuestionSudoku qs = new QuestionSudoku(board,32);
-
+    QuestionSudoku qs = new QuestionSudoku(board,50);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,11 +56,50 @@ public class NewGameActivity extends AppCompatActivity
         llBoard = findViewById(R.id.llBoard);
         View inBoard = findViewById(R.id.inBoard);
         tvAdjecent = new ArrayList<TextView>();
-
+        btNum = new Button[9];
+        btCount = new Button[9];
         board= new int[9][9];
         qs = new QuestionSudoku(board,32);
-        qs.createQuetionSudoku();
+        qs.createQuestionSudoku();
 
+        for(int i=0; i<9; i++)
+        {
+            btNum[i] = findViewById(btNumId[i]);
+            btCount[i] = findViewById(btCountId[i]);
+
+            int finalI = i;
+            btNum[i].setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int n = Integer.parseInt(btCount[finalI].getText().toString());
+                    if(n>0)
+                    {
+                        if(tvSelected!=null)
+                        {
+                            if(!tvSelected.getText().toString().equals(""))
+                            {
+                                int nn = Integer.parseInt(tvSelected.getText().toString());
+                                int mm = Integer.parseInt(btCount[nn-1].getText().toString()) + 1;
+                                btCount[nn-1].setText(""+mm);
+                            }
+                            n = Integer.parseInt(btCount[finalI].getText().toString())-1;
+                            btCount[finalI].setText(""+n);
+                            tvSelected.setText(""+(finalI+1));
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Plz select cell...!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Element "+n+" has been used.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
         if(inBoard instanceof LinearLayout)
         {
             LinearLayout innerLayout = (LinearLayout) inBoard;
@@ -119,6 +171,8 @@ public class NewGameActivity extends AppCompatActivity
             {
                 if(board[i][j] != 0)
                 {
+                    int n = Integer.parseInt(btCount[board[i][j]-1].getText().toString())+1;
+                    btCount[board[i][j]-1].setText(""+n);
                     int blockRow = i / 3;
                     int blockCol = j / 3;
                     int cellRow = i % 3;
