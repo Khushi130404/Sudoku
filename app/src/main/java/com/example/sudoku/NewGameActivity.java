@@ -3,6 +3,7 @@ package com.example.sudoku;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -45,7 +46,8 @@ public class NewGameActivity extends Activity
     int selectedI,selectedJ;
     List<TextView> tvAdjecent;
     int board[][] = new int[9][9];
-    QuestionSudoku qs = new QuestionSudoku(board,50);
+    QuestionSudoku qs;
+    List<Integer> availableNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,11 +64,13 @@ public class NewGameActivity extends Activity
         board= new int[9][9];
         qs = new QuestionSudoku(board,10);
         qs.createQuestionSudoku();
+        availableNum = new ArrayList<Integer>();
 
         for(int i=0; i<9; i++)
         {
             btNum[i] = findViewById(btNumId[i]);
             btCount[i] = findViewById(btCountId[i]);
+            availableNum.add(i+1);
 
             int finalI = i;
             btNum[i].setOnClickListener(new View.OnClickListener()
@@ -84,16 +88,42 @@ public class NewGameActivity extends Activity
                                 int nn = Integer.parseInt(tvSelected.getText().toString());
                                 int mm = Integer.parseInt(btCount[nn-1].getText().toString()) + 1;
                                 btCount[nn-1].setText(""+mm);
+                                if(mm==0)
+                                {
+                                    availableNum.add(nn);
+                                }
                             }
                             n = Integer.parseInt(btCount[finalI].getText().toString())-1;
                             btCount[finalI].setText(""+n);
+                            if(n==0)
+                            {
+                                availableNum.remove(Integer.valueOf(finalI+1));
+                            }
                             tvSelected.setText(""+(finalI+1));
-                            //int x = tvSelected.getId();
                             if(qs.fullBoard[selectedI][selectedJ]==finalI+1)
                             {
                                 board[selectedI][selectedJ] = finalI+1;
                                 tvSelected = null;
                                 Toast.makeText(getApplicationContext(), "Correct position...!", Toast.LENGTH_SHORT).show();
+                            }
+                            if(availableNum.isEmpty())
+                            {
+                                boolean nonZero = true;
+                                for(int ii=0; ii<9; ii++)
+                                {
+                                    for(int jj=0; jj<9; jj++)
+                                    {
+                                        if(board[ii][jj]==0)
+                                        {
+                                            nonZero = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if(nonZero)
+                                {
+                                    Toast.makeText(getApplicationContext(),"Victory",Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
                         else
@@ -201,6 +231,10 @@ public class NewGameActivity extends Activity
                 if(board[i][j] != 0)
                 {
                     int n = Integer.parseInt(btCount[board[i][j]-1].getText().toString())-1;
+                    if(n==0)
+                    {
+                        availableNum.remove(Integer.valueOf(board[i][j]));
+                    }
                     btCount[board[i][j]-1].setText(""+n);
                     int blockRow = i / 3;
                     int blockCol = j / 3;
