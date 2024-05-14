@@ -54,7 +54,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount1"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -83,7 +83,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount2"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -112,7 +112,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount3"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -141,7 +141,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount4"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -170,7 +170,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount5"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -199,7 +199,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount6"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -228,7 +228,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount7"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -257,7 +257,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount8"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -286,7 +286,7 @@
                 ></Button>
             <Button
                 android:id="@+id/btCount9"
-                android:text="0"
+                android:text="9"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

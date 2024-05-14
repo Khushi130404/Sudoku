@@ -60,7 +60,7 @@ public class NewGameActivity extends Activity
         btNum = new Button[9];
         btCount = new Button[9];
         board= new int[9][9];
-        qs = new QuestionSudoku(board,32);
+        qs = new QuestionSudoku(board,10);
         qs.createQuestionSudoku();
 
         for(int i=0; i<9; i++)
@@ -92,12 +92,13 @@ public class NewGameActivity extends Activity
                             if(qs.fullBoard[selectedI][selectedJ]==finalI+1)
                             {
                                 board[selectedI][selectedJ] = finalI+1;
+                                tvSelected = null;
                                 Toast.makeText(getApplicationContext(), "Correct position...!", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(), "Plz select cell...!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Plz select correct cell...!", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else
@@ -145,6 +146,25 @@ public class NewGameActivity extends Activity
                                         {
                                             tvSelected.setBackground(getDrawable(R.drawable.cell));
                                         }
+                                        if(tvSelected==cell[finalI][finalJ][finalK][finalL])
+                                        {
+                                            try
+                                            {
+                                                int n = Integer.parseInt(tvSelected.getText().toString());
+                                                btCount[n-1].setText(""+(Integer.parseInt(btCount[n-1].getText().toString())+1));
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                // Do nothing
+                                            }
+                                            tvSelected.setText("");
+                                            tvSelected = null;
+                                            while(!tvAdjecent.isEmpty())
+                                            {
+                                                tvAdjecent.remove(0).setBackground(getDrawable(R.drawable.cell));
+                                            }
+                                            return;
+                                        }
                                         while(!tvAdjecent.isEmpty())
                                         {
                                             tvAdjecent.remove(0).setBackground(getDrawable(R.drawable.cell));
@@ -180,7 +200,7 @@ public class NewGameActivity extends Activity
             {
                 if(board[i][j] != 0)
                 {
-                    int n = Integer.parseInt(btCount[board[i][j]-1].getText().toString())+1;
+                    int n = Integer.parseInt(btCount[board[i][j]-1].getText().toString())-1;
                     btCount[board[i][j]-1].setText(""+n);
                     int blockRow = i / 3;
                     int blockCol = j / 3;
