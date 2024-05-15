@@ -19,10 +19,10 @@ public class NewGameActivity extends Activity implements Runnable
 
     LinearLayout llBoard;
     TextView cell[][][][];
-    TextView tvScore, tvTimer;
+    TextView tvScore, tvTimer, tvDifficulty, tvMistakes, tvAllowedMistakes;
     String gameDuration;
     Long startTime;
-    int score=0;
+    int score=0, mistakes=0;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
             {R.id.ll21,R.id.ll22,R.id.ll23},
             {R.id.ll31,R.id.ll32,R.id.ll33}};
@@ -63,14 +63,32 @@ public class NewGameActivity extends Activity implements Runnable
         View inBoard = findViewById(R.id.inBoard);
         tvScore = findViewById(R.id.tvScore);
         tvTimer = findViewById(R.id.tvTimer);
-        tvAdjecent = new ArrayList<TextView>();
+        tvDifficulty = findViewById(R.id.tvDifficulty);
+        tvMistakes = findViewById(R.id.tvMistakes);
+        tvAllowedMistakes = findViewById(R.id.tvAllowedMistakes);
+        tvAdjecent = new ArrayList<>();
         btNum = new Button[9];
         btCount = new Button[9];
         board= new int[9][9];
 
-        qs = new QuestionSudoku(board,getIntent().getIntExtra("empty",30));
+        int empty = getIntent().getIntExtra("empty",30);
+        tvAllowedMistakes.setText(""+empty);
+
+        if(empty==10)
+        {
+            tvDifficulty.setText("Easy");
+        }
+        else if(empty==30)
+        {
+            tvDifficulty.setText("Medium");
+        }
+        else
+        {
+            tvDifficulty.setText("Hard");
+        }
+        qs = new QuestionSudoku(board,empty);
         qs.createQuestionSudoku();
-        availableNum = new ArrayList<Integer>();
+        availableNum = new ArrayList<>();
 
         for(int i=0; i<9; i++)
         {
@@ -117,7 +135,16 @@ public class NewGameActivity extends Activity implements Runnable
                             else
                             {
                                 score--;
+                                mistakes++;
+                                tvMistakes.setText(""+mistakes);
                                 tvScore.setText("SCORE : "+score);
+                                if(mistakes==empty)
+                                {
+                                    Toast.makeText(getApplicationContext(), "You Loose", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(getApplicationContext(), HomePageActivity.class);
+                                    startActivity(i);
+                                }
+
                             }
                             if(availableNum.isEmpty())
                             {

@@ -21,7 +21,53 @@
         android:layout_weight="0.5"
         >
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:text="Mistakes: "
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.5"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/tvMistakes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                ></TextView>
+
+            <TextView
+                android:text="/"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/tvAllowedMistakes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                ></TextView>
+        </LinearLayout>
+
         <TextView
+            android:id="@+id/tvDifficulty"
+            android:textAlignment="center"
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></TextView>
+
+        <TextView
+            android:textAlignment="center"
             android:id="@+id/tvTimer"
             android:text="Timer"
             android:layout_width="0dp"
