@@ -48,14 +48,17 @@ public class HomePageActivity extends Activity {
                 {
                     case "Easy" :
                         Intent i1 = new Intent(getApplicationContext(), NewGameActivity.class);
+                        i1.putExtra("empty",10);
                         startActivity(i1);
                         return true;
                     case "Medium" :
                         Intent i2 = new Intent(getApplicationContext(), NewGameActivity.class);
+                        i2.putExtra("empty",30);
                         startActivity(i2);
                         return true;
                     case "Hard" :
                         Intent i3 = new Intent(getApplicationContext(), NewGameActivity.class);
+                        i3.putExtra("empty",50);
                         startActivity(i3);
                         return true;
                     default: return false;

@@ -19,6 +19,8 @@ public class NewGameActivity extends Activity
 
     LinearLayout llBoard;
     TextView cell[][][][];
+    TextView tvScore;
+    int score=0;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
             {R.id.ll21,R.id.ll22,R.id.ll23},
             {R.id.ll31,R.id.ll32,R.id.ll33}};
@@ -58,11 +60,12 @@ public class NewGameActivity extends Activity
         cell = new TextView[3][3][3][3];
         llBoard = findViewById(R.id.llBoard);
         View inBoard = findViewById(R.id.inBoard);
+        tvScore = findViewById(R.id.tvScore);
         tvAdjecent = new ArrayList<TextView>();
         btNum = new Button[9];
         btCount = new Button[9];
         board= new int[9][9];
-        qs = new QuestionSudoku(board,10);
+        qs = new QuestionSudoku(board,getIntent().getIntExtra("empty",30));
         qs.createQuestionSudoku();
         availableNum = new ArrayList<Integer>();
 
@@ -102,9 +105,16 @@ public class NewGameActivity extends Activity
                             tvSelected.setText(""+(finalI+1));
                             if(qs.fullBoard[selectedI][selectedJ]==finalI+1)
                             {
+                                score++;
+                                tvScore.setText("SCORE : "+score);
                                 board[selectedI][selectedJ] = finalI+1;
                                 tvSelected = null;
                                 Toast.makeText(getApplicationContext(), "Correct position...!", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                score--;
+                                tvScore.setText("SCORE : "+score);
                             }
                             if(availableNum.isEmpty())
                             {
@@ -126,14 +136,6 @@ public class NewGameActivity extends Activity
                                 }
                             }
                         }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(), "Plz select correct cell...!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(), "Element "+n+" has been used.", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
