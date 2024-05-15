@@ -50,6 +50,7 @@ public class NewGameActivity extends Activity implements Runnable
     Button btCount[];
     TextView tvSelected;
     int selectedI,selectedJ;
+    int hint;
     List<TextView> tvAdjecent;
     int board[][] = new int[9][9];
     QuestionSudoku qs;
@@ -78,7 +79,7 @@ public class NewGameActivity extends Activity implements Runnable
 
         int empty = getIntent().getIntExtra("empty",30);
         tvAllowedMistakes.setText(""+empty);
-
+        hint = (empty/10)*2;
         share = getSharedPreferences(""+empty,MODE_PRIVATE);
 
         if(empty==10)
@@ -176,6 +177,13 @@ public class NewGameActivity extends Activity implements Runnable
                                     edit.putLong("bestTiime",Math.min(thisTime,bestTime));
                                     edit.apply();
                                     Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
+                                    Intent i = new Intent(getApplicationContext(),VictoryPageActivity.class);
+                                    i.putExtra("difficulty",empty);
+                                    i.putExtra("score",score);
+                                    i.putExtra("time",thisTime);
+                                    i.putExtra("bestTime",bestTime);
+                                    startActivity(i);
+                                    finish();
                                 }
                             }
                         }
@@ -275,6 +283,10 @@ public class NewGameActivity extends Activity implements Runnable
             @Override
             public void onClick(View v)
             {
+                if(hint==0)
+                {
+                    return;
+                }
                 if(tvSelected!=null)
                 {
                     score--;
@@ -316,12 +328,25 @@ public class NewGameActivity extends Activity implements Runnable
                             gameDuration = tvTimer.getText().toString();
                             Long thisTime = System.currentTimeMillis() - startTime;
                             Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
-                            SharedPreferences.Editor edit = share.edit();
-                            edit.putLong("bestTiime",Math.min(thisTime,bestTime));
-                            edit.apply();
+
+                            if(bestTime>thisTime)
+                            {
+                                SharedPreferences.Editor edit = share.edit();
+                                edit.putLong("bestTiime",thisTime);
+                                edit.apply();
+                            }
+
                             Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(getApplicationContext(),VictoryPageActivity.class);
+                            i.putExtra("difficulty",empty);
+                            i.putExtra("score",score);
+                            i.putExtra("time",thisTime);
+                            i.putExtra("bestTime",bestTime);
+                            startActivity(i);
+                            finish();
                         }
                     }
+                    hint--;
                 }
             }
         });
