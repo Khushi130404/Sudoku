@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ public class NewGameActivity extends Activity implements Runnable
     String gameDuration;
     Long startTime;
     int score=0, mistakes=0;
+    SharedPreferences share;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
             {R.id.ll21,R.id.ll22,R.id.ll23},
             {R.id.ll31,R.id.ll32,R.id.ll33}};
@@ -51,6 +54,7 @@ public class NewGameActivity extends Activity implements Runnable
     int board[][] = new int[9][9];
     QuestionSudoku qs;
     List<Integer> availableNum;
+    ImageView imgHint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,6 +65,7 @@ public class NewGameActivity extends Activity implements Runnable
         cell = new TextView[3][3][3][3];
         llBoard = findViewById(R.id.llBoard);
         View inBoard = findViewById(R.id.inBoard);
+        imgHint = findViewById(R.id.imgHint);
         tvScore = findViewById(R.id.tvScore);
         tvTimer = findViewById(R.id.tvTimer);
         tvDifficulty = findViewById(R.id.tvDifficulty);
@@ -73,6 +78,8 @@ public class NewGameActivity extends Activity implements Runnable
 
         int empty = getIntent().getIntExtra("empty",30);
         tvAllowedMistakes.setText(""+empty);
+
+        share = getSharedPreferences(""+empty,MODE_PRIVATE);
 
         if(empty==10)
         {
@@ -163,6 +170,11 @@ public class NewGameActivity extends Activity implements Runnable
                                 if(nonZero)
                                 {
                                     gameDuration = tvTimer.getText().toString();
+                                    Long thisTime = System.currentTimeMillis() - startTime;
+                                    Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
+                                    SharedPreferences.Editor edit = share.edit();
+                                    edit.putLong("bestTiime",Math.min(thisTime,bestTime));
+                                    edit.apply();
                                     Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -257,6 +269,62 @@ public class NewGameActivity extends Activity implements Runnable
                 }
             }
         }
+
+        imgHint.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(tvSelected!=null)
+                {
+                    score--;
+                    tvScore.setText("Score : "+score);
+                    if(!tvSelected.getText().toString().equals(""))
+                    {
+                        int n = Integer.parseInt(tvSelected.getText().toString());
+                        int m = Integer.parseInt(btCount[n-1].getText().toString())+1;
+                        btCount[n-1].setText(""+m);
+                        if(m==1)
+                        {
+                            availableNum.add(n);
+                        }
+                    }
+                    tvSelected.setText(""+qs.fullBoard[selectedI][selectedJ]);
+                    board[selectedI][selectedJ] = qs.fullBoard[selectedI][selectedJ];
+                    int n = Integer.parseInt(btCount[board[selectedI][selectedJ]-1].getText().toString())-1;
+                    btCount[board[selectedI][selectedJ]-1].setText(""+n);
+                    if(n==0)
+                    {
+                        availableNum.remove(Integer.valueOf(board[selectedI][selectedJ]));
+                    }
+                    if(availableNum.isEmpty())
+                    {
+                        boolean nonZero = true;
+                        for(int ii=0; ii<9; ii++)
+                        {
+                            for(int jj=0; jj<9; jj++)
+                            {
+                                if(board[ii][jj]==0)
+                                {
+                                    nonZero = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if(nonZero)
+                        {
+                            gameDuration = tvTimer.getText().toString();
+                            Long thisTime = System.currentTimeMillis() - startTime;
+                            Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
+                            SharedPreferences.Editor edit = share.edit();
+                            edit.putLong("bestTiime",Math.min(thisTime,bestTime));
+                            edit.apply();
+                            Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            }
+        });
 
         for(int i=0; i<9; i++)
         {

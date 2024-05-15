@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:weightSum="6"
+    android:weightSum="7"
     android:layout_height="match_parent">
 
     <TextView
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             >
             <TextView
-                android:text="Mistakes: "
+                android:text="Mistakes :"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3.5"
@@ -37,6 +37,7 @@
 
             <TextView
                 android:id="@+id/tvMistakes"
+                android:text="0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -82,9 +83,9 @@
         android:layout_height="0dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:paddingTop="70dp"
-        android:paddingBottom="70dp"
-        android:layout_weight="4"
+        android:paddingTop="60dp"
+        android:paddingBottom="60dp"
+        android:layout_weight="4.25"
         >
 
         <include
@@ -98,10 +99,27 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
+        android:layout_weight="0.5"
+        android:weightSum="3"
+        >
+        <ImageView
+            android:id="@+id/imgHint"
+            android:src="@drawable/hint"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></ImageView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
         android:weightSum="9"
         android:paddingTop="20dp"
         android:paddingBottom="40dp"
-        android:layout_weight="1"
+        android:layout_weight="1.25"
         >
 
         <LinearLayout
