@@ -14,12 +14,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewGameActivity extends Activity
+public class NewGameActivity extends Activity implements Runnable
 {
 
     LinearLayout llBoard;
     TextView cell[][][][];
-    TextView tvScore;
+    TextView tvScore, tvTimer;
+    String gameDuration;
+    Long startTime;
     int score=0;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
             {R.id.ll21,R.id.ll22,R.id.ll23},
@@ -43,7 +45,6 @@ public class NewGameActivity extends Activity
 
     Button btNum[];
     Button btCount[];
-
     TextView tvSelected;
     int selectedI,selectedJ;
     List<TextView> tvAdjecent;
@@ -61,10 +62,12 @@ public class NewGameActivity extends Activity
         llBoard = findViewById(R.id.llBoard);
         View inBoard = findViewById(R.id.inBoard);
         tvScore = findViewById(R.id.tvScore);
+        tvTimer = findViewById(R.id.tvTimer);
         tvAdjecent = new ArrayList<TextView>();
         btNum = new Button[9];
         btCount = new Button[9];
         board= new int[9][9];
+
         qs = new QuestionSudoku(board,getIntent().getIntExtra("empty",30));
         qs.createQuestionSudoku();
         availableNum = new ArrayList<Integer>();
@@ -132,13 +135,15 @@ public class NewGameActivity extends Activity
                                 }
                                 if(nonZero)
                                 {
-                                    Toast.makeText(getApplicationContext(),"Victory",Toast.LENGTH_LONG).show();
+                                    gameDuration = tvTimer.getText().toString();
+                                    Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
                                 }
                             }
                         }
                     }
                 }
             });
+
         }
         if(inBoard instanceof LinearLayout)
         {
@@ -244,6 +249,50 @@ public class NewGameActivity extends Activity
                     int cellCol = j % 3;
                     cell[blockRow][blockCol][cellRow][cellCol].setText(""+board[i][j]);
                 }
+            }
+        }
+        startTime = System.currentTimeMillis();
+        new Thread(this).start();
+    }
+
+    private void updateTimerText(long timePeriod)
+    {
+        int sec = (int)(timePeriod/1000) % 60;
+        int min = (int)(timePeriod/(1000*60)) % 60;
+        int hr = (int)(timePeriod/(1000*60*60)) % 24;
+
+        String h = ""+hr;
+        String m = ""+min;
+        String s = ""+sec;
+
+        if(hr<10)
+        {
+            h = "0"+h;
+        }
+        if(min<10)
+        {
+            m = "0"+m;
+        }
+        if(sec<10)
+        {
+            s = "0"+s;
+        }
+        tvTimer.setText(h+" : "+m+" : "+s);
+    }
+
+    @Override
+    public void run()
+    {
+        while(!Thread.currentThread().isInterrupted())
+        {
+            updateTimerText(System.currentTimeMillis() - startTime);
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e)
+            {
+                throw new RuntimeException(e);
             }
         }
     }

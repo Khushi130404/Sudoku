@@ -14,6 +14,23 @@
         ></TextView>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_weight="0.5"
+        >
+
+        <TextView
+            android:id="@+id/tvTimer"
+            android:text="Timer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></TextView>
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/llBoard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
