@@ -22,6 +22,7 @@ public class NewGameActivity extends Activity implements Runnable
     TextView tvScore, tvTimer, tvDifficulty, tvMistakes, tvAllowedMistakes;
     String gameDuration;
     Long startTime,pauseTime, pauseStart;
+    boolean gameOver;
     int score=0, mistakes=0;
     SharedPreferences share;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
@@ -69,6 +70,7 @@ public class NewGameActivity extends Activity implements Runnable
         tvTimer = findViewById(R.id.tvTimer);
         pauseTime = 0L;
         pauseStart = 0L;
+        gameOver = false;
         tvDifficulty = findViewById(R.id.tvDifficulty);
         tvMistakes = findViewById(R.id.tvMistakes);
         tvAllowedMistakes = findViewById(R.id.tvAllowedMistakes);
@@ -148,6 +150,7 @@ public class NewGameActivity extends Activity implements Runnable
                                 tvScore.setText("SCORE : "+score);
                                 if(mistakes==empty)
                                 {
+                                    gameOver = true;
                                     Toast.makeText(getApplicationContext(), "You Loose", Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(getApplicationContext(), HomePageActivity.class);
                                     startActivity(i);
@@ -170,6 +173,7 @@ public class NewGameActivity extends Activity implements Runnable
                                 }
                                 if(nonZero)
                                 {
+                                    gameOver = true;
                                     gameDuration = tvTimer.getText().toString();
                                     Long thisTime = System.currentTimeMillis() - startTime - pauseTime;
                                     Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
@@ -190,7 +194,6 @@ public class NewGameActivity extends Activity implements Runnable
                     }
                 }
             });
-
         }
         if(inBoard instanceof LinearLayout)
         {
@@ -325,6 +328,7 @@ public class NewGameActivity extends Activity implements Runnable
                         }
                         if(nonZero)
                         {
+                            gameOver = true;
                             gameDuration = tvTimer.getText().toString();
                             Long thisTime = System.currentTimeMillis() - startTime - pauseTime;
                             Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
@@ -412,14 +416,50 @@ public class NewGameActivity extends Activity implements Runnable
         }
     }
 
+    @Override
     protected void onStop()
     {
         super.onStop();
         pauseStart = System.currentTimeMillis();
     }
+
+    @Override
     protected void onRestart()
     {
         super.onRestart();
         pauseTime += System.currentTimeMillis() - pauseStart;
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        if(!gameOver)
+        {
+            SharedPreferences continueShare = getSharedPreferences("continue",MODE_PRIVATE);
+            SharedPreferences.Editor edit = continueShare.edit();
+            StringBuilder sbBoard = new StringBuilder();
+            StringBuilder sbFull = new StringBuilder();
+            StringBuilder sbCount = new StringBuilder();
+            for (int i=0; i<9; i++)
+            {
+                sbCount.append(btCount[i].getText().toString()).append(",");
+                for (int j=0; j<9; j++)
+                {
+                    sbBoard.append(board[i][j]).append(",");
+                    sbFull.append(qs.fullBoard[i][j]).append(",");
+                }
+            }
+            long thisTime = System.currentTimeMillis() - startTime - pauseTime;
+            edit.putString("board",sbBoard.toString());
+            edit.putString("fullBoard",sbFull.toString());
+            edit.putInt("difficulty",getIntent().getIntExtra("empty",30));
+            edit.putInt("mistake",mistakes);
+            edit.putInt("score",score);
+            edit.putInt("hint",hint);
+            edit.putLong("time",thisTime);
+            edit.putString("count",sbCount.toString());
+            edit.apply();
+        }
     }
 }
