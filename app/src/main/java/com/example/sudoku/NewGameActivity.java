@@ -436,6 +436,7 @@ public class NewGameActivity extends Activity implements Runnable
         super.onDestroy();
         if(!gameOver)
         {
+            Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_SHORT).show();
             SharedPreferences continueShare = getSharedPreferences("continue",MODE_PRIVATE);
             SharedPreferences.Editor edit = continueShare.edit();
             StringBuilder sbBoard = new StringBuilder();
@@ -453,7 +454,7 @@ public class NewGameActivity extends Activity implements Runnable
             long thisTime = System.currentTimeMillis() - startTime - pauseTime;
             edit.putString("board",sbBoard.toString());
             edit.putString("fullBoard",sbFull.toString());
-            edit.putInt("difficulty",getIntent().getIntExtra("empty",30));
+            edit.putInt("empty",getIntent().getIntExtra("empty",30));
             edit.putInt("mistake",mistakes);
             edit.putInt("score",score);
             edit.putInt("hint",hint);

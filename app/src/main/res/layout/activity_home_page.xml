@@ -18,8 +18,8 @@
         ></ImageView>
 
     <Button
-        android:id="@+id/btStartGame"
-        android:text="Start Game"
+        android:id="@+id/btContinueGame"
+        android:text="Continue Game"
         android:layout_marginRight="70dp"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="80dp"
