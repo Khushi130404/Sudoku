@@ -1,7 +1,5 @@
 package com.example.sudoku;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,7 +21,7 @@ public class NewGameActivity extends Activity implements Runnable
     TextView cell[][][][];
     TextView tvScore, tvTimer, tvDifficulty, tvMistakes, tvAllowedMistakes;
     String gameDuration;
-    Long startTime;
+    Long startTime,pauseTime, pauseStart;
     int score=0, mistakes=0;
     SharedPreferences share;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
@@ -51,7 +49,7 @@ public class NewGameActivity extends Activity implements Runnable
     TextView tvSelected;
     int selectedI,selectedJ;
     int hint;
-    List<TextView> tvAdjecent;
+    List<TextView> tvAdjacent;
     int board[][] = new int[9][9];
     QuestionSudoku qs;
     List<Integer> availableNum;
@@ -69,10 +67,12 @@ public class NewGameActivity extends Activity implements Runnable
         imgHint = findViewById(R.id.imgHint);
         tvScore = findViewById(R.id.tvScore);
         tvTimer = findViewById(R.id.tvTimer);
+        pauseTime = 0L;
+        pauseStart = 0L;
         tvDifficulty = findViewById(R.id.tvDifficulty);
         tvMistakes = findViewById(R.id.tvMistakes);
         tvAllowedMistakes = findViewById(R.id.tvAllowedMistakes);
-        tvAdjecent = new ArrayList<>();
+        tvAdjacent = new ArrayList<>();
         btNum = new Button[9];
         btCount = new Button[9];
         board= new int[9][9];
@@ -174,14 +174,14 @@ public class NewGameActivity extends Activity implements Runnable
                                     Long thisTime = System.currentTimeMillis() - startTime;
                                     Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
                                     SharedPreferences.Editor edit = share.edit();
-                                    edit.putLong("bestTiime",Math.min(thisTime,bestTime));
+                                    edit.putLong("bestTime",Math.min(thisTime,bestTime));
                                     edit.apply();
                                     Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
                                     Intent i = new Intent(getApplicationContext(),VictoryPageActivity.class);
                                     i.putExtra("difficulty",empty);
                                     i.putExtra("score",score);
                                     i.putExtra("time",thisTime);
-                                    i.putExtra("bestTime",bestTime);
+                                    i.putExtra("bestTime",share.getLong("bestTime",0));
                                     startActivity(i);
                                     finish();
                                 }
@@ -243,15 +243,15 @@ public class NewGameActivity extends Activity implements Runnable
                                             }
                                             tvSelected.setText("");
                                             tvSelected = null;
-                                            while(!tvAdjecent.isEmpty())
+                                            while(!tvAdjacent.isEmpty())
                                             {
-                                                tvAdjecent.remove(0).setBackground(getDrawable(R.drawable.cell));
+                                                tvAdjacent.remove(0).setBackground(getDrawable(R.drawable.cell));
                                             }
                                             return;
                                         }
-                                        while(!tvAdjecent.isEmpty())
+                                        while(!tvAdjacent.isEmpty())
                                         {
-                                            tvAdjecent.remove(0).setBackground(getDrawable(R.drawable.cell));
+                                            tvAdjacent.remove(0).setBackground(getDrawable(R.drawable.cell));
                                         }
                                         for(int ii=0; ii<3; ii++)
                                         {
@@ -260,9 +260,9 @@ public class NewGameActivity extends Activity implements Runnable
                                                 cell[ii][finalJ][jj][finalL].setBackground(getDrawable(R.drawable.cell_adjecent));
                                                 cell[finalI][ii][finalK][jj].setBackground(getDrawable(R.drawable.cell_adjecent));
                                                 cell[finalI][finalJ][ii][jj].setBackground(getDrawable(R.drawable.cell_adjecent));
-                                                tvAdjecent.add(cell[finalI][finalJ][ii][jj]);
-                                                tvAdjecent.add(cell[ii][finalJ][jj][finalL]);
-                                                tvAdjecent.add(cell[finalI][ii][finalK][jj]);
+                                                tvAdjacent.add(cell[finalI][finalJ][ii][jj]);
+                                                tvAdjacent.add(cell[ii][finalJ][jj][finalL]);
+                                                tvAdjacent.add(cell[finalI][ii][finalK][jj]);
                                             }
                                         }
                                         cell[finalI][finalJ][finalK][finalL].setBackground(getDrawable(R.drawable.cell_on_select));
@@ -328,20 +328,15 @@ public class NewGameActivity extends Activity implements Runnable
                             gameDuration = tvTimer.getText().toString();
                             Long thisTime = System.currentTimeMillis() - startTime;
                             Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
-
-                            if(bestTime>thisTime)
-                            {
-                                SharedPreferences.Editor edit = share.edit();
-                                edit.putLong("bestTiime",thisTime);
-                                edit.apply();
-                            }
-
+                            SharedPreferences.Editor edit = share.edit();
+                            edit.putLong("bestTime",Math.min(thisTime,bestTime));
+                            edit.apply();
                             Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
                             Intent i = new Intent(getApplicationContext(),VictoryPageActivity.class);
                             i.putExtra("difficulty",empty);
                             i.putExtra("score",score);
                             i.putExtra("time",thisTime);
-                            i.putExtra("bestTime",bestTime);
+                            i.putExtra("bestTime",share.getLong("bestTime",Long.MAX_VALUE));
                             startActivity(i);
                             finish();
                         }
@@ -405,7 +400,7 @@ public class NewGameActivity extends Activity implements Runnable
     {
         while(!Thread.currentThread().isInterrupted())
         {
-            updateTimerText(System.currentTimeMillis() - startTime);
+            updateTimerText(System.currentTimeMillis() - startTime - pauseTime);
             try
             {
                 Thread.sleep(1000);
@@ -415,5 +410,16 @@ public class NewGameActivity extends Activity implements Runnable
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    protected void onStop()
+    {
+        super.onStop();
+        pauseStart = System.currentTimeMillis();
+    }
+    protected void onRestart()
+    {
+        super.onRestart();
+        pauseTime += System.currentTimeMillis() - pauseStart;
     }
 }
