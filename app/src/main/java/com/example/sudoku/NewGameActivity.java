@@ -171,7 +171,7 @@ public class NewGameActivity extends Activity implements Runnable
                                 if(nonZero)
                                 {
                                     gameDuration = tvTimer.getText().toString();
-                                    Long thisTime = System.currentTimeMillis() - startTime;
+                                    Long thisTime = System.currentTimeMillis() - startTime - pauseTime;
                                     Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
                                     SharedPreferences.Editor edit = share.edit();
                                     edit.putLong("bestTime",Math.min(thisTime,bestTime));
@@ -326,7 +326,7 @@ public class NewGameActivity extends Activity implements Runnable
                         if(nonZero)
                         {
                             gameDuration = tvTimer.getText().toString();
-                            Long thisTime = System.currentTimeMillis() - startTime;
+                            Long thisTime = System.currentTimeMillis() - startTime - pauseTime;
                             Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
                             SharedPreferences.Editor edit = share.edit();
                             edit.putLong("bestTime",Math.min(thisTime,bestTime));
