@@ -23,7 +23,7 @@ public class NewGameActivity extends Activity implements Runnable
     String gameDuration;
     Long startTime,pauseTime, pauseStart;
     boolean gameOver;
-    int score=0, mistakes=0;
+    int score=0, mistakes=0, empty;
     SharedPreferences share;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
             {R.id.ll21,R.id.ll22,R.id.ll23},
@@ -79,7 +79,7 @@ public class NewGameActivity extends Activity implements Runnable
         btCount = new Button[9];
         board= new int[9][9];
 
-        int empty = getIntent().getIntExtra("empty",30);
+        empty = getIntent().getIntExtra("empty",30);
         tvAllowedMistakes.setText(""+empty);
         hint = (empty/10)*2;
         share = getSharedPreferences(""+empty,MODE_PRIVATE);
@@ -436,7 +436,6 @@ public class NewGameActivity extends Activity implements Runnable
         super.onDestroy();
         if(!gameOver)
         {
-            Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_SHORT).show();
             SharedPreferences continueShare = getSharedPreferences("continue",MODE_PRIVATE);
             SharedPreferences.Editor edit = continueShare.edit();
             StringBuilder sbBoard = new StringBuilder();
@@ -454,12 +453,11 @@ public class NewGameActivity extends Activity implements Runnable
             long thisTime = System.currentTimeMillis() - startTime - pauseTime;
             edit.putString("board",sbBoard.toString());
             edit.putString("fullBoard",sbFull.toString());
-            edit.putInt("empty",getIntent().getIntExtra("empty",30));
+            edit.putInt("empty",empty);
             edit.putInt("mistake",mistakes);
             edit.putInt("score",score);
             edit.putInt("hint",hint);
             edit.putLong("time",thisTime);
-            edit.putString("count",sbCount.toString());
             edit.apply();
         }
     }

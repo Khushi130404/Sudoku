@@ -49,7 +49,8 @@ public class HomePageActivity extends Activity {
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Game Continue", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(),ContinueGameActivity.class);
+                    startActivity(i);
                 }
             }
         });
