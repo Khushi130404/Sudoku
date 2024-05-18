@@ -33,8 +33,18 @@ public class HomePageActivity extends Activity {
         btNewGame.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 showPopupMenu(v);
+            }
+        });
+
+        btBackTracking.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showPopupBack(v);
             }
         });
 
@@ -66,28 +76,63 @@ public class HomePageActivity extends Activity {
             @Override
             public boolean onMenuItemClick(MenuItem item)
             {
+                Intent i = new Intent(getApplicationContext(), NewGameActivity.class);
+
                 switch (item.getTitle().toString())
                 {
                     case "Easy" :
-                        Intent i1 = new Intent(getApplicationContext(), NewGameActivity.class);
-                        i1.putExtra("empty",10);
-                        startActivity(i1);
+                        i.putExtra("empty",10);
+                        startActivity(i);
                         return true;
+
                     case "Medium" :
-                        Intent i2 = new Intent(getApplicationContext(), NewGameActivity.class);
-                        i2.putExtra("empty",30);
-                        startActivity(i2);
+                        i.putExtra("empty",30);
+                        startActivity(i);
                         return true;
+
                     case "Hard" :
-                        Intent i3 = new Intent(getApplicationContext(), NewGameActivity.class);
-                        i3.putExtra("empty",50);
-                        startActivity(i3);
+                        i.putExtra("empty",50);
+                        startActivity(i);
                         return true;
+
                     default: return false;
                 }
             }
         });
         pop.show();
     }
+    private void showPopupBack(View v)
+    {
+        PopupMenu pop = new PopupMenu(getApplicationContext(),v);
+        pop.getMenuInflater().inflate(R.menu.popup_difficulty,pop.getMenu());
 
+
+        pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                Intent i = new Intent(getApplicationContext(), BackTrackingActivity.class);
+                switch (item.getTitle().toString())
+                {
+                    case "Easy" :
+                        i.putExtra("empty",10);
+                        startActivity(i);
+                        return true;
+
+                    case "Medium" :
+                        i.putExtra("empty",30);
+                        startActivity(i);
+                        return true;
+
+                    case "Hard" :
+                        i.putExtra("empty",50);
+                        startActivity(i);
+                        return true;
+
+                    default: return false;
+                }
+            }
+        });
+        pop.show();
+    }
 }
