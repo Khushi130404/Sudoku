@@ -434,10 +434,11 @@ public class NewGameActivity extends Activity implements Runnable
     protected void onDestroy()
     {
         super.onDestroy();
+        SharedPreferences continueShare = getSharedPreferences("continue",MODE_PRIVATE);
+        SharedPreferences.Editor edit = continueShare.edit();
+
         if(!gameOver)
         {
-            SharedPreferences continueShare = getSharedPreferences("continue",MODE_PRIVATE);
-            SharedPreferences.Editor edit = continueShare.edit();
             StringBuilder sbBoard = new StringBuilder();
             StringBuilder sbFull = new StringBuilder();
             StringBuilder sbCount = new StringBuilder();
@@ -458,6 +459,17 @@ public class NewGameActivity extends Activity implements Runnable
             edit.putInt("score",score);
             edit.putInt("hint",hint);
             edit.putLong("time",thisTime);
+            edit.apply();
+        }
+        else
+        {
+            edit.putString("board","0");
+            edit.putInt("empty",0);
+            edit.putString("fullBoard","0");
+            edit.putInt("mistake",0);
+            edit.putInt("score",0);
+            edit.putInt("hint",0);
+            edit.putLong("time",0);
             edit.apply();
         }
     }
