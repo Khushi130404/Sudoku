@@ -22,7 +22,7 @@ public class NewGameActivity extends Activity implements Runnable
     TextView tvScore, tvTimer, tvDifficulty, tvMistakes, tvAllowedMistakes;
     String gameDuration;
     Long startTime,pauseTime, pauseStart;
-    boolean gameOver;
+    boolean gameOver, pause;
     int score=0, mistakes=0, empty;
     SharedPreferences share;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
@@ -70,6 +70,7 @@ public class NewGameActivity extends Activity implements Runnable
         tvTimer = findViewById(R.id.tvTimer);
         pauseTime = 0L;
         pauseStart = 0L;
+        pause = false;
         gameOver = false;
         tvDifficulty = findViewById(R.id.tvDifficulty);
         tvMistakes = findViewById(R.id.tvMistakes);
@@ -420,14 +421,20 @@ public class NewGameActivity extends Activity implements Runnable
     protected void onStop()
     {
         super.onStop();
-        pauseStart = System.currentTimeMillis();
+        if(!pause)
+        {
+            pauseStart = System.currentTimeMillis();
+        }
     }
 
     @Override
     protected void onRestart()
     {
         super.onRestart();
-        pauseTime += System.currentTimeMillis() - pauseStart;
+        if(!pause)
+        {
+            pauseTime += System.currentTimeMillis() - pauseStart;
+        }
     }
 
     @Override
