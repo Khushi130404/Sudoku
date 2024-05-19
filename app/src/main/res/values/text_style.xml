@@ -3,6 +3,7 @@
     <style name="cell_text">
     <item name="android:textColor">#6E6584</item>
         <item name="android:gravity">center</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
     <style name="level_text">
@@ -13,8 +14,19 @@
     <style name="score_text">
         <item name="android:gravity">center</item>
         <item name="android:textSize">25dp</item>
-        <item name="android:textColor">#73748F</item>
+        <item name="android:textColor">#7E7497</item>
         <item name="android:paddingTop">20dp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="num_button_text">
+        <item name="android:textColor">#F4F8F4</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="count_text">
+        <item name="android:textColor">#F4F8F4</item>
+        <item name="android:alpha">0.6</item>
+        <item name="android:paddingBottom">2dp</item>
     </style>
 </resources>
