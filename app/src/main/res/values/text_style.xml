@@ -11,6 +11,10 @@
     </style>
 
     <style name="score_text">
-
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">25dp</item>
+        <item name="android:textColor">#73748F</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
