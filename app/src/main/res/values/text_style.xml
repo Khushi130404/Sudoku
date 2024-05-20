@@ -41,4 +41,5 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">#F4F8F4</item>
     </style>
+
 </resources>
