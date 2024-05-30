@@ -57,7 +57,7 @@ public class BackTrackingSolver
 
     boolean solveSudoku(int i,int j,List<List<Integer>> set1,List<List<Integer>> set2,List<List<Integer>> set3) throws InterruptedException
     {
-        Thread.sleep(1000);
+
         List<List<Integer>> list1 = new ArrayList<List<Integer>>(set1);
         List<List<Integer>> list2 = new ArrayList<List<Integer>>(set2);
         List<List<Integer>> list3 = new ArrayList<List<Integer>>(set3);
@@ -80,6 +80,7 @@ public class BackTrackingSolver
             {
                 return solveSudoku(i2,j2,list1,list2,list3);
             }
+            Thread.sleep(1000);
             for(int k=1; k<=9; k++)
             {
                 int l=(i/3)*3+(j/3);
