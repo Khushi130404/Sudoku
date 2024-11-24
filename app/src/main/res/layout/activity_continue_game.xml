@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="#F4F8F4"
     android:weightSum="7"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tvScore"
-        android:text="SCORE : "
+        android:text="SCORE : 0"
+        style="@style/score_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.95"
         ></TextView>
 
     <LinearLayout
@@ -25,11 +27,16 @@
             android:layout_width="0dp"
             android:orientation="horizontal"
             android:weightSum="6"
+            android:paddingEnd="11dp"
+            android:paddingStart="7dp"
+            android:layout_gravity="center"
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
             <TextView
-                android:text="Mistakes :"
+                android:text="Faults :"
+                android:gravity="right|center"
+                style="@style/level_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3.5"
@@ -38,6 +45,8 @@
             <TextView
                 android:id="@+id/tvMistakes"
                 android:text="0"
+                android:gravity="center|end"
+                style="@style/level_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -46,6 +55,7 @@
             <TextView
                 android:text="/"
                 android:layout_width="0dp"
+                style="@style/level_text"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 ></TextView>
@@ -53,6 +63,7 @@
             <TextView
                 android:id="@+id/tvAllowedMistakes"
                 android:layout_width="0dp"
+                style="@style/level_text"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 ></TextView>
@@ -62,6 +73,7 @@
             android:id="@+id/tvDifficulty"
             android:textAlignment="center"
             android:text=""
+            style="@style/level_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -71,6 +83,7 @@
             android:textAlignment="center"
             android:id="@+id/tvTimer"
             android:text="Timer"
+            style="@style/level_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -83,9 +96,9 @@
         android:layout_height="0dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:paddingTop="60dp"
-        android:paddingBottom="60dp"
-        android:layout_weight="4.25"
+        android:paddingTop="40dp"
+        android:paddingBottom="30dp"
+        android:layout_weight="3.8"
         >
 
         <include
@@ -98,13 +111,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:orientation="horizontal"
         android:layout_weight="0.5"
         android:weightSum="3"
         >
         <ImageView
+            android:id="@+id/imgPause"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></ImageView>
+
+        <ImageView
             android:id="@+id/imgHint"
             android:src="@drawable/hint"
+            android:foregroundGravity="right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></ImageView>
+
+        <ImageView
+            android:id="@+id/imgPlay"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -128,6 +158,8 @@
             android:weightSum="3"
             android:background="@drawable/number_button"
             android:padding="1dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -137,13 +169,16 @@
                 android:id="@+id/btNum1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="1"
                 ></Button>
+
             <Button
                 android:id="@+id/btCount1"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -155,6 +190,8 @@
             android:text="1"
             android:orientation="vertical"
             android:weightSum="3"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:background="@drawable/number_button"
             android:padding="1dp"
             android:layout_width="0dp"
@@ -166,6 +203,7 @@
                 android:id="@+id/btNum2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="2"
@@ -173,6 +211,7 @@
             <Button
                 android:id="@+id/btCount2"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -187,6 +226,8 @@
             android:background="@drawable/number_button"
             android:padding="1dp"
             android:layout_width="0dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
@@ -195,6 +236,7 @@
                 android:id="@+id/btNum3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="3"
@@ -202,6 +244,7 @@
             <Button
                 android:id="@+id/btCount3"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -216,6 +259,8 @@
             android:background="@drawable/number_button"
             android:padding="1dp"
             android:layout_width="0dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
@@ -224,6 +269,7 @@
                 android:id="@+id/btNum4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="4"
@@ -231,6 +277,7 @@
             <Button
                 android:id="@+id/btCount4"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -244,6 +291,8 @@
             android:weightSum="3"
             android:background="@drawable/number_button"
             android:padding="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -253,6 +302,7 @@
                 android:id="@+id/btNum5"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="5"
@@ -260,6 +310,7 @@
             <Button
                 android:id="@+id/btCount5"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -273,6 +324,8 @@
             android:weightSum="3"
             android:background="@drawable/number_button"
             android:padding="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -282,6 +335,7 @@
                 android:id="@+id/btNum6"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="6"
@@ -289,6 +343,7 @@
             <Button
                 android:id="@+id/btCount6"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -302,6 +357,8 @@
             android:weightSum="3"
             android:background="@drawable/number_button"
             android:padding="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -311,6 +368,7 @@
                 android:id="@+id/btNum7"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="7"
@@ -318,6 +376,7 @@
             <Button
                 android:id="@+id/btCount7"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -331,6 +390,8 @@
             android:weightSum="3"
             android:background="@drawable/number_button"
             android:padding="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -340,6 +401,7 @@
                 android:id="@+id/btNum8"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="8"
@@ -347,6 +409,7 @@
             <Button
                 android:id="@+id/btCount8"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -360,6 +423,8 @@
             android:weightSum="3"
             android:background="@drawable/number_button"
             android:padding="1dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginLeft="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -369,6 +434,7 @@
                 android:id="@+id/btNum9"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                style="@style/num_button_text"
                 android:background="@drawable/count_button"
                 android:layout_weight="2"
                 android:text="9"
@@ -376,6 +442,7 @@
             <Button
                 android:id="@+id/btCount9"
                 android:text="9"
+                style="@style/count_text"
                 android:background="@drawable/count_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

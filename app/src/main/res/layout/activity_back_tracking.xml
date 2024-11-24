@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:orientation="vertical"
     android:weightSum="7"
+    android:background="#F4F8F4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BackTrackingActivity">
@@ -12,6 +13,7 @@
     <TextView
         android:text="Back Tracking"
         android:gravity="center"
+        style="@style/score_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.2"

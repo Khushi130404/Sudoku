@@ -207,7 +207,6 @@ public class ContinueGameActivity extends Activity implements Runnable
                                     SharedPreferences.Editor edit = share.edit();
                                     edit.putLong("bestTime",Math.min(thisTime,bestTime));
                                     edit.apply();
-                                    Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
                                     Intent i = new Intent(getApplicationContext(),VictoryPageActivity.class);
                                     i.putExtra("difficulty",empty);
                                     i.putExtra("score",score);
@@ -362,7 +361,6 @@ public class ContinueGameActivity extends Activity implements Runnable
                             SharedPreferences.Editor edit = share.edit();
                             edit.putLong("bestTime",Math.min(thisTime,bestTime));
                             edit.apply();
-                            Toast.makeText(getApplicationContext(),"Victory "+gameDuration,Toast.LENGTH_LONG).show();
                             Intent i = new Intent(getApplicationContext(),VictoryPageActivity.class);
                             i.putExtra("difficulty",empty);
                             i.putExtra("score",score);
