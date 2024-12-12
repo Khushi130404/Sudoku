@@ -11,20 +11,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
-public class NewGameActivity extends Activity implements Runnable
+
+public class ContinueGameActivity extends Activity implements Runnable
 {
-
     LinearLayout llBoard;
     TextView cell[][][][];
     TextView tvScore, tvTimer, tvDifficulty, tvMistakes, tvAllowedMistakes;
     String gameDuration;
-    Long startTime,pauseTime, pauseStart;
-    boolean gameOver, pause;
-    int score=0, mistakes=0, empty;
+    Long startTime,pauseTime, pauseStart, continueTime;
+    boolean gameOver;
+    int score, mistakes, empty;
     SharedPreferences share;
+    SharedPreferences continueShare;
     int llId[][] = {{R.id.ll11,R.id.ll12,R.id.ll13},
             {R.id.ll21,R.id.ll22,R.id.ll23},
             {R.id.ll31,R.id.ll32,R.id.ll33}};
@@ -51,16 +59,19 @@ public class NewGameActivity extends Activity implements Runnable
     int selectedI,selectedJ;
     int hint;
     List<TextView> tvAdjacent;
-    int board[][] = new int[9][9];
-    QuestionSudoku qs;
+    int board[][];
+    int fullBoard[][];
     List<Integer> availableNum;
     ImageView imgHint;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_game);
+        setContentView(R.layout.activity_continue_game);
+
+        board = new int[9][9];
+        fullBoard = new int[9][9];
 
         cell = new TextView[3][3][3][3];
         llBoard = findViewById(R.id.llBoard);
@@ -70,7 +81,6 @@ public class NewGameActivity extends Activity implements Runnable
         tvTimer = findViewById(R.id.tvTimer);
         pauseTime = 0L;
         pauseStart = 0L;
-        pause = false;
         gameOver = false;
         tvDifficulty = findViewById(R.id.tvDifficulty);
         tvMistakes = findViewById(R.id.tvMistakes);
@@ -80,10 +90,16 @@ public class NewGameActivity extends Activity implements Runnable
         btCount = new Button[9];
         board= new int[9][9];
 
-        empty = getIntent().getIntExtra("empty",30);
-        tvAllowedMistakes.setText(""+empty);
-        hint = (empty/10)*2;
+        continueShare = getSharedPreferences("continue",MODE_PRIVATE);
+        empty = continueShare.getInt("empty",30);
         share = getSharedPreferences(""+empty,MODE_PRIVATE);
+        tvAllowedMistakes.setText(""+empty);
+        hint = continueShare.getInt("hint",0);
+        score = continueShare.getInt("score",0);
+        mistakes = continueShare.getInt("mistake",0);
+        tvScore.setText("SCORE : "+score);
+        tvMistakes.setText(""+mistakes);
+        continueTime = continueShare.getLong("time",0);
 
         if(empty==10)
         {
@@ -97,9 +113,19 @@ public class NewGameActivity extends Activity implements Runnable
         {
             tvDifficulty.setText("Hard");
         }
-        qs = new QuestionSudoku(board,empty);
-        qs.createQuestionSudoku();
+
         availableNum = new ArrayList<>();
+        StringTokenizer stBoard = new StringTokenizer(continueShare.getString("board",""),",");
+        StringTokenizer stFull = new StringTokenizer(continueShare.getString("fullBoard",""),",");
+
+        for(int i=0; i<9; i++)
+        {
+            for(int j=0; j<9; j++)
+            {
+                board[i][j] = Integer.parseInt(stBoard.nextToken());
+                fullBoard[i][j] = Integer.parseInt(stFull.nextToken());
+            }
+        }
 
         for(int i=0; i<9; i++)
         {
@@ -135,7 +161,7 @@ public class NewGameActivity extends Activity implements Runnable
                                 availableNum.remove(Integer.valueOf(finalI+1));
                             }
                             tvSelected.setText(""+(finalI+1));
-                            if(qs.fullBoard[selectedI][selectedJ]==finalI+1)
+                            if(fullBoard[selectedI][selectedJ]==finalI+1)
                             {
                                 score++;
                                 tvScore.setText("SCORE : "+score);
@@ -176,7 +202,7 @@ public class NewGameActivity extends Activity implements Runnable
                                 {
                                     gameOver = true;
                                     gameDuration = tvTimer.getText().toString();
-                                    Long thisTime = System.currentTimeMillis() - startTime - pauseTime;
+                                    Long thisTime = System.currentTimeMillis() - startTime - pauseTime + continueTime;
                                     Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
                                     SharedPreferences.Editor edit = share.edit();
                                     edit.putLong("bestTime",Math.min(thisTime,bestTime));
@@ -195,6 +221,7 @@ public class NewGameActivity extends Activity implements Runnable
                 }
             });
         }
+
         if(inBoard instanceof LinearLayout)
         {
             LinearLayout innerLayout = (LinearLayout) inBoard;
@@ -280,7 +307,6 @@ public class NewGameActivity extends Activity implements Runnable
                 }
             }
         }
-
         imgHint.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -304,8 +330,8 @@ public class NewGameActivity extends Activity implements Runnable
                             availableNum.add(n);
                         }
                     }
-                    tvSelected.setText(""+qs.fullBoard[selectedI][selectedJ]);
-                    board[selectedI][selectedJ] = qs.fullBoard[selectedI][selectedJ];
+                    tvSelected.setText(""+fullBoard[selectedI][selectedJ]);
+                    board[selectedI][selectedJ] = fullBoard[selectedI][selectedJ];
                     int n = Integer.parseInt(btCount[board[selectedI][selectedJ]-1].getText().toString())-1;
                     btCount[board[selectedI][selectedJ]-1].setText(""+n);
                     if(n==0)
@@ -330,7 +356,7 @@ public class NewGameActivity extends Activity implements Runnable
                         {
                             gameOver = true;
                             gameDuration = tvTimer.getText().toString();
-                            Long thisTime = System.currentTimeMillis() - startTime - pauseTime;
+                            Long thisTime = System.currentTimeMillis() - startTime - pauseTime + continueTime;
                             Long bestTime = share.getLong("bestTime",Long.MAX_VALUE);
                             SharedPreferences.Editor edit = share.edit();
                             edit.putLong("bestTime",Math.min(thisTime,bestTime));
@@ -403,7 +429,7 @@ public class NewGameActivity extends Activity implements Runnable
     {
         while(!Thread.currentThread().isInterrupted())
         {
-            updateTimerText(System.currentTimeMillis() - startTime - pauseTime);
+            updateTimerText(System.currentTimeMillis() - startTime - pauseTime + continueTime);
             try
             {
                 Thread.sleep(1000);
@@ -419,29 +445,21 @@ public class NewGameActivity extends Activity implements Runnable
     protected void onStop()
     {
         super.onStop();
-        if(!pause)
-        {
-            pauseStart = System.currentTimeMillis();
-        }
+        pauseStart = System.currentTimeMillis();
     }
 
     @Override
     protected void onRestart()
     {
         super.onRestart();
-        if(!pause)
-        {
-            pauseTime += System.currentTimeMillis() - pauseStart;
-        }
+        pauseTime += System.currentTimeMillis() - pauseStart;
     }
 
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
-        SharedPreferences continueShare = getSharedPreferences("continue",MODE_PRIVATE);
         SharedPreferences.Editor edit = continueShare.edit();
-
         if(!gameOver)
         {
             StringBuilder sbBoard = new StringBuilder();
@@ -453,10 +471,10 @@ public class NewGameActivity extends Activity implements Runnable
                 for (int j=0; j<9; j++)
                 {
                     sbBoard.append(board[i][j]).append(",");
-                    sbFull.append(qs.fullBoard[i][j]).append(",");
+                    sbFull.append(fullBoard[i][j]).append(",");
                 }
             }
-            long thisTime = System.currentTimeMillis() - startTime - pauseTime;
+            long thisTime = System.currentTimeMillis() - startTime - pauseTime + continueTime;
             edit.putString("board",sbBoard.toString());
             edit.putString("fullBoard",sbFull.toString());
             edit.putInt("empty",empty);
