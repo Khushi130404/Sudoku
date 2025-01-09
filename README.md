@@ -32,3 +32,17 @@ Sudoku is an interactive puzzle game built in Android Studio using Java. This ap
 
 - Data Structure: Uses a 4D array (3x3x3x3) to efficiently manage the entire Sudoku grid.
 
+## How It Works
+
+### Backtracking Algorithm
+
+The core of the Sudoku solver is a backtracking algorithm. It systematically searches for the correct numbers to place in each cell, ensuring that the Sudoku rules are followed:
+- Each row must have numbers 1 to 9 without repetition.
+- Each column must have numbers 1 to 9 without repetition.
+- Each 3x3 sub-grid must have numbers 1 to 9 without repetition.
+
+### Multithreading for Visualization
+
+The app uses multithreading to display the backtracking process in real time. This feature provides users with a visual representation of how the algorithm solves the puzzle step-by-step.
+
+
