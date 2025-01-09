@@ -45,4 +45,13 @@ The core of the Sudoku solver is a backtracking algorithm. It systematically sea
 
 The app uses multithreading to display the backtracking process in real time. This feature provides users with a visual representation of how the algorithm solves the puzzle step-by-step.
 
+## Usage
+1. Launch the App: Open the Sudoku app on your Android device.
 
+2. Select a Mode: Choose between New Game or Continue Game.
+
+3. Set Difficulty: Pick your desired difficulty level.
+
+4. Start Playing: Use hints, track your time, and aim for the highest score!
+
+5. Celebrate Victory: Upon completing the puzzle, enjoy the victory page to mark your achievement.
