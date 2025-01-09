@@ -10,3 +10,10 @@ Sudoku is an interactive puzzle game built in Android Studio using Java. This ap
 
 - Backtracking Visualization: Visualize the solving process using multithreading for a smooth experience.
 
+## Additional Features
+- Time Counter: Tracks the duration of the game.
+- Hint System: Provides hints to help solve the puzzle.
+- Remaining Digits Tracker: Shows how many numbers are left to complete the grid.
+- Score Calculation: Keeps track of your performance based on time and accuracy.
+- Penalty System: Adds penalties for incorrect moves.
+- Difficulty Levels: Choose from Easy, Medium, or Hard levels to suit your skill.
